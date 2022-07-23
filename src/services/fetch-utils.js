@@ -9,6 +9,26 @@ export async function createMovie(movie) {
   return data;
 }
 
+export async function updateMovie(movie, id) {
+  const { data, error } = await client
+    .from('movies')
+    .update(movie)
+    .match({ id: id })
+    .single();
+    
+  return data;
+}
+
+export async function deleteMovie(id) {
+  const { data, error } = await client
+    .from('movies')
+    .delete()
+    .match({ id: id })
+    .single();
+      
+  return data;
+}
+
 export async function getMovies() {
   const { data, error } = await client
     .from('movies')
@@ -16,6 +36,17 @@ export async function getMovies() {
   
   return data;
 }
+
+export async function getMovieById(id) {
+  const { data, error } = await client
+    .from('movies')
+    .select('*')
+    .match({ id })
+    .single();
+    
+  return data;
+}
+
 export async function signUp(email, password) {
   const { user } = await client.auth.signUp({
     email: email,

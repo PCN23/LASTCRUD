@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { createMovie } from './services/fetch-utils';
 
 export default function CreatePage() {
-  const { push } = useHistory();  //we use to navigate useing java//
+  const { push } = useHistory();  //we use to navigate using java//
   const [title, setTitle] = useState('');
   const [director, setDirector] = useState('');
 
@@ -28,7 +28,7 @@ export default function CreatePage() {
 
 
 
-    <div>
+    <div className='create-page'>
       <h2>create a movie for you watchlist!</h2>
       <form onSubmit={handleFormSubmit}>
         <label> Movie Title:
