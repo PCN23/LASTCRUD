@@ -1,25 +1,81 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import React from 'react';
+import { client } from './services/client';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect
+} from 'react-router-dom';
+import AuthPage from './AuthPage';
+import CreatePage from './CreatePage';
+import MovieListPage from './MovieListPage';
+import UpdatePage from './UpdatePage';
+import { logout } from './services/fetch-utils';
 
-function App() {
+
+
+export default function App() {
+  // our callback
+  const [user, setUser] = useState(client.auth.user());
+
+
+  function handleLogoutClick() {
+    logout();
+    setUser('');
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            {
+              user && <button onClick={handleLogoutClick}>Logout</button>
+            }
+            <li>
+              <Link to="/">Sign In</Link>
+            </li>
+            <li>
+              <Link to="/create">Create New Movie</Link>
+            </li>
+            <li>
+              <Link to="/movies/1">update a movie</Link>
+            </li>
+            <li>
+              <Link to="/movies">List of movies</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route exact path="/">
+            {
+              !user 
+                ? <AuthPage setUser={setUser} />
+                : <Redirect to="movies"/>
+            }
+          </Route>
+          <Route exact path="/movies/:id">
+            <UpdatePage />
+          </Route>
+          <Route exact path="/movies">
+            {
+              user 
+                ? <MovieListPage setUser={setUser} />
+                : <Redirect to="/"/>
+            }
+          </Route>
+          <Route exact path="/create">
+            <CreatePage />
+          </Route>
+          
+        </Switch>
+      </div>
+    </Router>
   );
 }
-
-export default App;
