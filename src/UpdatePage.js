@@ -14,12 +14,10 @@ export default function UpdatePage() {
   
 
 // create movie in supa base and send to user list
-  console.log(id);
   useEffect(() => {
     async function doFetch() {
       const movie = await getMovieById(id);
 
-      console.log(movie);
       setTitle(movie.title);
       setDirector(movie.director);
     }
