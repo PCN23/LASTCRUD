@@ -65,4 +65,5 @@ export async function signIn(email, password) {
 
 export async function logout() {
   const { error } = await client.auth.user();
+  // return error;
 }

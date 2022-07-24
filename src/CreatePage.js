@@ -17,6 +17,7 @@ export default function CreatePage() {
       title: title,
       director: director
     });
+    console.log(movie);
 // clear forms
     setDirector('');
     setTitle('');
