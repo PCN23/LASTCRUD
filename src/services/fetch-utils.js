@@ -6,7 +6,7 @@ export async function createMovie(movie) {
     .insert(movie)
     .single();
 
-  return data;
+  return { data, error };
 }
 
 export async function updateMovie(movie, id) {
@@ -16,7 +16,7 @@ export async function updateMovie(movie, id) {
     .match({ id: id })
     .single();
     
-  return data;
+  return { data, error };
 }
 
 export async function deleteMovie(id) {
@@ -26,7 +26,7 @@ export async function deleteMovie(id) {
     .match({ id: id })
     .single();
       
-  return data;
+  return { data, error };
 }
 
 export async function getMovies() {
@@ -34,7 +34,7 @@ export async function getMovies() {
     .from('movies')
     .select('*');
   
-  return data;
+  return { data, error };
 }
 
 export async function getMovieById(id) {
@@ -44,7 +44,7 @@ export async function getMovieById(id) {
     .match({ id })
     .single();
     
-  return data;
+  return { data, error };
 }
 
 export async function signUp(email, password) {
@@ -65,5 +65,5 @@ export async function signIn(email, password) {
 
 export async function logout() {
   const { error } = await client.auth.user();
-  // return error;
+  return error;
 }
