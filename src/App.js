@@ -61,7 +61,13 @@ export default function App() {
             }
           </Route>
           <Route exact path="/movies/:id">
-            <UpdatePage />
+            {
+              
+              user 
+                ? <UpdatePage setUser={setUser} />
+                : <Redirect to="movies"/>
+              
+            }
           </Route>
           <Route exact path="/movies">
             {
